@@ -3,6 +3,9 @@
 > 因为懒（没技术），所以在这里写一些关于工作或生活的一些分享
 >
 > help ? lssues:question: : Star:star: 
+>
+> 点击链接时可以选择摁住 ctrl 键（新窗口打开）
+
 
 - Node.js 读取 .db3 和 .mdb 文件（工作篇）
 
