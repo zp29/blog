@@ -6,7 +6,7 @@
 
 - Node.js 读取 .db3 和 .mdb 文件（工作篇）
 
-  [link](http://zp-29.com:2929/md/ReadDb3File.md)
+  [link](http://zp-29.com:2929/md/ReadDb3File.md?_blank)
 
   > **node-adodb** -> 读取 .mdb 文件
   >
