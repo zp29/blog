@@ -10,5 +10,5 @@
 
   > **node-adodb** -> 读取 .mdb 文件
   >
-  > sql.js -> 读取 .db3 文件
+  > **sql.js** -> 读取 .db3 文件
 
