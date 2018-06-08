@@ -14,8 +14,4 @@ help ? Issues : Star
 
   > **node-adodb** -> 读取 .mdb 文件
   >
-<<<<<<< HEAD
   > **sql.js** -> 读取 .db3 文件
-=======
-  > **sql.js** -> 读取 .db3 文件
->>>>>>> 79018ff0d3c08b205fffa65bcc6fff1f8553b18a
