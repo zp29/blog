@@ -7,6 +7,6 @@ date:  2018-06-18
 
 # 先放美图
 
-![bash1][../imgs/bash-1.png]
+<img src='https://github.com/zp29/zp29-blog/blob/master/md/imgs/bash-1.png' />
 
-![bash1][../imgs/bash-1.png]
+<img src='https://github.com/zp29/zp29-blog/blob/master/md/imgs/bash-2.png' />
