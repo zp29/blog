@@ -1,0 +1,23 @@
+{
+  "name": "zp29-blog",
+  "version": "1.0.0",
+  "description": "This is zp29 blog.",
+  "main": "index.js",
+  "scripts": {
+    "test": "No."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zp29/zp29-blog.git"
+  },
+  "keywords": [
+    "zp-29",
+    "blog"
+  ],
+  "author": "zp-29",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zp29/zp29-blog/issues"
+  },
+  "homepage": "https://github.com/zp29/zp29-blog#readme"
+}
