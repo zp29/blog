@@ -1,11 +1,12 @@
 # 工作及生活分享 zp-29
 
-网站正在发开，这可能需要一些时间
+>  网站正在发开，这可能需要一些时间
+
 因为懒（没技术），所以在这里写一些关于工作或生活有趣或实用的东西。
 
-help ? Issues : Star
+**help ? Issues : Star**
 
-演示功能使用 [nodeppt](https://github.com/ksky521/nodeppt)
+演示功能使用  [![nodeppt](https://img.shields.io/badge/Nodeppt-1.4.5-brightgreen.svg)](https://github.com/ksky521/nodeppt)
 
 因为讲课比较多，直接做成一个个的PPT形式分享给大家
 
