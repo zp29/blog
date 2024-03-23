@@ -1,7 +1,6 @@
 # PlugName -> vue-lazyload 
 
 
-
 ### lazy-component (Update Bug) 
 
 :no_entry_sign:

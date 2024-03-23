@@ -1,4 +1,5 @@
 
+```css
 // border
 div {
     border: 1px solid #bbb;
@@ -18,6 +19,6 @@ div {
     background: url(../img/line.png) repeat-x left bottom;
     background-size: 100% 1px;
 }
-
+```
 
 
