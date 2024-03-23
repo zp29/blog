@@ -5,13 +5,13 @@ site_author: zp29 # your name
 #[UI]
 theme:
   name: material
-  custom_dir: docs/  #覆写路径
+  custom_dir: docs/overrides  #覆写路径
   # font: #谷歌字体，自行搜索
   #   text: Bitter  #文本字体
   #   code: Roboto Mono  #代码字体
   logo: assets/favicon.png #左上角logo，可插入图片链接
 
-  favicon: img/apple-line.png   # 网页icon
+  favicon: assets/favicon.png   # 网页icon
 
   palette:
     #明暗按钮
@@ -58,12 +58,9 @@ theme:
 
   icon: 
     repo: fontawesome/brands/github #右上角图标
-edit_uri: edit/main/docs # 编辑按钮跳转的链接 
-repo_url: https://github.com/zp29/zp29-blog # 右上角点击跳转的链接
-repo_name: zp29-blog # 右上角的名字
-  
-  
-copyright: Copyright &copy; 2018~2024 zp29/All Rights Reserved. # 左下角的版权声明
+edit_uri: edit/master/docs # 编辑按钮跳转的链接 
+repo_url: https://github.com/zp29/zp29 # 右上角点击跳转的链接
+repo_name: zp29 # 右上角的名字
   
 
 extra:
@@ -114,8 +111,8 @@ plugins:
         - index.md 
         - tag.md
         - liuyanban.md
-        - blog/posts/update.md
-        - blog/posts/wkw.md
+        - Blog/posts/update.md
+        - Blog/posts/wkw.md
         - about/link.md 
   - blog:   #博客配置
       post_date_format: full #时间
@@ -202,11 +199,18 @@ extra_css:
 
 # [Navigtion]
 nav:
-  - 记录（Blog）:
-    - Home: index.md
-    - SumUp: SumUp/index.md
-    - LeetCode: LeetCode/index.md
-  - 项目（Demo）:
-    - Demo: Demo/index.md
-  - 简介（Foote）:
-    - Foote: About/index.md
+  # - 主页: index.md
+  - 记录)Blog:
+    - Blog:
+      - Blog: blog/index.md
+    - 学习:
+      - LeetCode: LeetCode/index.md
+  - 项目)Demo:
+    - 目录:
+      - 目录: demo/index.md
+      - 功能测试: demo/test.md
+  - 简介)Me:
+    - Home: about/index.md
+  - 留言板: liuyanban.md
+
+copyright: Copyright &copy; 2018~2024 zp29/All Rights Reserved. # 左下角的版权声明

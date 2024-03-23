@@ -1,7 +1,8 @@
 ---
+title: '&nbsp;'
 hide:
-  #- navigation # 显示右
-  #- toc #显示左
+  - navigation
+  - toc
   - footer
   - feedback
 comments: false
@@ -12,6 +13,7 @@ comments: false
 </center>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script src="//code.tidio.co/hauj26yrwlvwgxcrpimpqwkmihmpdgvc.js" async></script>
 
 <center>
 	<font  color= #608DBD size=3>
