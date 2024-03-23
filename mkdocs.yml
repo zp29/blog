@@ -202,9 +202,11 @@ extra_css:
 
 # [Navigtion]
 nav:
-  - Blog:
+  - 记录（Blog）:
     - Home: index.md
     - SumUp: SumUp/index.md
     - LeetCode: LeetCode/index.md
-  - About:
-    - About: About/index.md
+  - 项目（Demo）:
+    - Demo: Demo/index.md
+  - 简介（Foote）:
+    - Foote: About/index.md
