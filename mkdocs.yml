@@ -1,5 +1,5 @@
 #[Info]
-site_name: zp29'Website #your site name 显示在左上角
+site_name: zp29'Blog #your site name 显示在左上角
 site_url: http://zp29.net  
 site_author: zp29 # your name
 #[UI]
@@ -35,7 +35,7 @@ theme:
   features: 
     - announce.dismiss #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
     # - navigation.instant 
-    #- header.autohide  #自动隐藏
+    - header.autohide  #自动隐藏
     - navigation.tracking #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
     - navigation.tabs #顶级部分将呈现在上面视口标题下方的菜单层中，但在移动设备上保持原样
     # - navigation.tabs.sticky  #启用粘性选项卡后，导航选项卡将锁定在标题下方，并在向下滚动时始终保持可见
@@ -59,7 +59,7 @@ theme:
   icon: 
     repo: fontawesome/brands/github #右上角图标
 edit_uri: edit/master/docs # 编辑按钮跳转的链接 
-repo_url: https://github.com/zp29/zp29 # 右上角点击跳转的链接
+repo_url: https://github.com/zp29/blog # 右上角点击跳转的链接
 repo_name: zp29 # 右上角的名字
   
 
@@ -211,6 +211,6 @@ nav:
       - 功能测试: demo/test.md
   - 简介)Me:
     - Home: about/index.md
-  - 留言板: liuyanban.md
+  - 留言板/随写: liuyanban.md
 
 copyright: Copyright &copy; 2018~2024 zp29/All Rights Reserved. # 左下角的版权声明
