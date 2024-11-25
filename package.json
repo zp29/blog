@@ -1,77 +1,74 @@
 {
-  "name": "notion-next",
-  "version": "4.7.10",
-  "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "name": "nextjs-notion-starter-kit",
+  "version": "2.0.0",
+  "private": true,
+  "description": "The perfect starter kit for building beautiful websites with Next.js and Notion.",
+  "author": "Travis Fischer <travis@transitivebullsh.it>",
+  "repository": "transitive-bullshit/nextjs-notion-starter-kit",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tangly1024/NotionNext.git"
+  "engines": {
+    "node": ">=18"
   },
-  "author": {
-    "name": "tangly",
-    "email": "mail@tangly1024.com",
-    "url": "http://tangly1024.com"
-  },
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "post-build": "next-sitemap --config next-sitemap.config.js",
-    "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
-    "bundle-report": "cross-env ANALYZE=true next build",
-    "build-all-in-dev": "cross-env VERCEL_ENV=production next build",
-    "version": "echo $npm_package_version"
+    "deploy": "vercel deploy",
+    "deps:upgrade": "[ -z $GITHUB_ACTIONS ] && pnpm up -L notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:update on CI'",
+    "deps:link": "[ -z $GITHUB_ACTIONS ] && run-s deps:link:* || echo 'Skipping deps:update on CI'",
+    "deps:unlink": "[ -z $GITHUB_ACTIONS ] && pnpm add notion-client notion-types notion-utils react-notion-x || echo 'Skipping deps:update on CI'",
+    "deps:link:notion-types": "pnpm link ../react-notion-x/packages/notion-types",
+    "deps:link:notion-utils": "pnpm link ../react-notion-x/packages/notion-utils",
+    "deps:link:notion-client": "pnpm link ../react-notion-x/packages/notion-client",
+    "deps:link:react-notion-x": "pnpm link ../react-notion-x/packages/react-notion-x",
+    "analyze": "cross-env ANALYZE=true next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
+    "test": "run-p test:*",
+    "test:lint": "eslint .",
+    "test:prettier": "prettier '**/*.{js,jsx,ts,tsx}' --check"
   },
   "dependencies": {
-    "@clerk/localizations": "^3.0.4",
-    "@clerk/nextjs": "^5.1.5",
-    "@headlessui/react": "^1.7.15",
-    "@next/bundle-analyzer": "^12.1.1",
-    "@vercel/analytics": "^1.0.0",
-    "algoliasearch": "^4.18.0",
-    "axios": "^1.7.2",
-    "feed": "^4.2.2",
-    "js-md5": "^0.7.3",
-    "lodash.throttle": "^4.1.1",
-    "memory-cache": "^0.2.0",
-    "next": "14.2.4",
-    "notion-client": "6.15.6",
-    "notion-utils": "6.15.6",
+    "@fisch0920/use-dark-mode": "^2.4.0",
+    "@keyvhq/core": "^1.6.9",
+    "@keyvhq/redis": "^1.6.10",
+    "@react-icons/all-files": "^4.1.0",
+    "classnames": "^2.5.1",
+    "expiry-map": "^2.0.0",
+    "fathom-client": "^3.4.1",
+    "ky": "^1.7.2",
+    "lqip-modern": "^2.2.1",
+    "next": "^15.0.3",
+    "notion-client": "^7.1.3",
+    "notion-types": "^7.1.3",
+    "notion-utils": "^7.1.3",
+    "p-map": "^7.0.2",
+    "p-memoize": "^7.1.1",
+    "posthog-js": "^1.181.0",
+    "prismjs": "^1.29.0",
     "react": "^18.2.0",
+    "react-body-classname": "^1.3.1",
     "react-dom": "^18.2.0",
-    "react-facebook": "^8.1.4",
-    "react-hotkeys-hook": "^4.5.0",
-    "react-notion-x": "6.16.0",
-    "react-share": "^4.4.1",
-    "react-tweet-embed": "~2.0.0"
+    "react-notion-x": "^7.2.3",
+    "react-tweet": "^3.2.1",
+    "react-use": "^17.4.2",
+    "rss": "^1.2.2"
   },
   "devDependencies": {
-    "@types/react": "18.3.10",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.16.0",
-    "@waline/client": "^2.5.1",
-    "autoprefixer": "^10.4.13",
-    "cross-env": "^7.0.3",
+    "@fisch0920/eslint-config": "^1.4.0",
+    "@next/bundle-analyzer": "^15.0.2",
+    "@types/node": "^22.8.6",
+    "@types/react": "^18.0.21",
+    "cross-env": "^7.0.2",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^13.1.1",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.23.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "^7.34.3",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "next-sitemap": "^1.6.203",
-    "postcss": "^8.4.31",
-    "prettier": "^3.3.2",
-    "tailwindcss": "^3.3.2",
-    "typescript": "5.6.2",
-    "webpack-bundle-analyzer": "^4.5.0"
+    "npm-run-all2": "^7.0.1",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
   },
-  "resolutions": {
-    "axios": ">=0.21.1"
-  },
-  "bugs": {
-    "url": "https://github.com/tangly/NotionNext/issues",
-    "email": "tlyong1992@hotmail.com"
+  "overrides": {
+    "cacheable-request": {
+      "keyv": "npm:@keyvhq/core@~1.6.6"
+    }
   }
 }
