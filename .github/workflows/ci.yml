@@ -6,37 +6,36 @@ on:
       - main
 permissions:
   contents: write
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Invoke deployment hook
-        uses: distributhor/workflow-webhook@v1
-        env:
-          webhook_type: 'json-extended'
-          webhook_url: https://api.vercel.com/v1/integrations/deploy/prj_y7eRoVcd4tUywxvlxgOo6PkxZJhL/z55W8Fgu4U
-          webhook_secret: 
-          data: '{ "weapon": "hammer", "drink" : "beer" }'
-
 # jobs:
-#   deploy:
+#   build:
 #     runs-on: ubuntu-latest
 #     steps:
-#       - uses: actions/checkout@v4
-#       - name: Configure Git Credentials
-#         run: |
-#           git config user.name github-actions[bot]
-#           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-#       - uses: actions/setup-python@v4
-#         with:
-#           python-version: 3.x
-#       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-#       - uses: actions/cache@v3
-#         with:
-#           key: mkdocs-material-${{ env.cache_id }}
-#           path: .cache
-#           restore-keys: |
-#             mkdocs-material-
+#       - name: Invoke deployment hook
+#         uses: distributhor/workflow-webhook@v1
+#         env:
+#           webhook_type: 'json-extended'
+#           webhook_url: https://api.vercel.com/v1/integrations/deploy/prj_y7eRoVcd4tUywxvlxgOo6PkxZJhL/z55W8Fgu4U
+#           webhook_secret: 
+#           data: '{ "weapon": "hammer", "drink" : "beer" }'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v3
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
 #       - run: pip install mkdocs-material 
 #       - run: pip install mkdocs-git-revision-date-localized-plugin 
 #       - run: mkdocs gh-deploy --force
