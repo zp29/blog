@@ -1,0 +1,33 @@
+title: zp29's Blog
+description: 工作及生活分享
+url: "https://zp29.github.io"
+baseurl: "/blog"
+
+# 主题 - minima 是 GitHub Pages 原生支持的简洁主题
+remote_theme: jekyll/minima
+
+# 构建设置
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+
+# 插件
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+
+# 排除不需要的文件
+exclude:
+  - README.md
+  - LICENSE
+  - node_modules
+  - vendor
+
+# 默认值
+defaults:
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"
+      author: "zp29"
