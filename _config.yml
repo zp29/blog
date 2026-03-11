@@ -1,7 +1,7 @@
 title: zp29's Blog
 description: 工作及生活分享
-url: "https://zp29.github.io"
-baseurl: "/blog"
+url: "https://blog.zp29.de"
+baseurl: ""
 
 # 主题 - minima 是 GitHub Pages 原生支持的简洁主题
 remote_theme: jekyll/minima
