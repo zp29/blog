@@ -20,19 +20,22 @@ layout: default
   </header>
 
   {%- if page.toc -%}
-  <div class="toc-wrapper">
-    <details class="toc" open>
-      <summary>📑 目录</summary>
-      <nav>
+  <div class="post-layout">
+    <aside class="post-toc">
+      <div class="toc-title">目录</div>
+      <nav class="toc-nav">
         {% include toc_generator.html %}
       </nav>
-    </details>
+    </aside>
+    <main class="post-content e-content" itemprop="articleBody">
+      {{ content }}
+    </main>
   </div>
-  {%- endif -%}
-
+  {%- else -%}
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>
+  {%- endif -%}
 
   {%- if site.disqus.shortname -%}
     {%- include disqus_comments.html -%}
@@ -43,56 +46,103 @@ layout: default
 </article>
 
 <style>
-  .toc-wrapper {
+  /* 整体布局 */
+  .post-layout {
+    display: flex;
+    gap: 2rem;
     margin: 2rem 0;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #0366d6;
   }
-  
-  .toc summary {
-    font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    padding: 0.5rem 0;
+
+  /* 左侧目录 */
+  .post-toc {
+    flex: 0 0 240px;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
   }
-  
-  .toc nav {
-    margin-top: 0.5rem;
-    padding-left: 0.5rem;
+
+  .toc-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e1e4e8;
   }
-  
-  .toc nav ul {
+
+  .toc-nav {
+    font-size: 0.9rem;
+  }
+
+  .toc-list {
     list-style: none;
-    padding-left: 1rem;
+    padding: 0;
     margin: 0;
   }
-  
-  .toc nav ul li {
-    margin: 0.3rem 0;
+
+  .toc-item {
+    margin: 0.4rem 0;
+  }
+
+  .toc-item a {
+    color: #586069;
+    text-decoration: none;
+    display: block;
+    padding: 0.25rem 0;
+    transition: color 0.2s ease;
+  }
+
+  .toc-item a:hover {
+    color: #0366d6;
+  }
+
+  /* 二级目录缩进 */
+  .toc-level-3 {
+    margin-left: 1rem;
+  }
+
+  .toc-level-4 {
+    margin-left: 2rem;
+  }
+
+  /* 主内容区 */
+  .post-content {
+    flex: 1;
+    min-width: 0;
     line-height: 1.6;
   }
-  
-  .toc nav ul li a {
-    color: #0366d6;
-    text-decoration: none;
+
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .post-layout {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .post-toc {
+      flex: none;
+      position: static;
+      max-height: none;
+      overflow-y: visible;
+      border: 1px solid #e1e4e8;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .toc-title {
+      margin-bottom: 0.75rem;
+    }
   }
-  
-  .toc nav ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  /* 目录层级缩进 */
-  .toc nav ul ul {
-    padding-left: 1.5rem;
-  }
-  
-  /* 响应式：小屏幕下目录收起 */
-  @media (max-width: 600px) {
-    .toc-wrapper {
-      margin: 1rem 0;
-      padding: 0.8rem;
+
+  /* 平板设备 */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .post-toc {
+      flex: 0 0 200px;
     }
   }
 </style>
