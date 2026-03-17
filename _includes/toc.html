@@ -1,0 +1,30 @@
+{% comment %}
+  Generate Table of Contents from HTML content
+  Usage: {% include toc.html html=content %}
+{% endcomment %}
+
+{% assign min_header = include.min_header | default: 2 %}
+{% assign max_header = include.max_header | default: 4 %}
+
+{% assign content = include.html %}
+{% assign heading_prefix = '<h' %}
+{% assign headings = content | split: heading_prefix %}
+
+{% if headings.size > 1 %}
+  <ul class="toc-list">
+  {% for heading in headings offset: 1 %}
+    {% assign first_char = heading | slice: 0 %}
+    {% assign header_level = first_char | plus: 0 %}
+    
+    {% if header_level >= min_header and header_level <= max_header %}
+      {% assign rest = heading | split: '>' | shift | join: '>' %}
+      {% assign heading_text = rest | split: '</h' | first %}
+      {% assign heading_id = heading_text | slugify %}
+      
+      <li class="toc-item toc-level-{{ header_level }}">
+        <a href="#{{ heading_id }}">{{ heading_text | strip_html }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+{% endif %}
