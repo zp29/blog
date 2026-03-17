@@ -24,52 +24,14 @@ layout: default
     <details class="toc" open>
       <summary>📑 目录</summary>
       <nav>
-        {% assign headings = content | strip_newlines | split: '<h' %}
-        {% if headings.size > 1 %}
-          <ul class="toc-list">
-            {% for heading in headings offset: 1 %}
-              {% assign first_char = heading | slice: 0 %}
-              {% assign header_level = first_char | plus: 0 %}
-              
-              {% if header_level >= 2 and header_level <= 4 %}
-                {% assign rest = heading | split: '>' | shift | join: '>' %}
-                {% assign heading_text = rest | split: '</h' | first %}
-                {% assign heading_id = heading_text | strip_html | strip | slugify %}
-                
-                <li class="toc-item toc-level-{{ header_level }}">
-                  <a href="#{{ heading_id }}">{{ heading_text | strip_html }}</a>
-                </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        {% endif %}
+        {% include toc_generator.html %}
       </nav>
     </details>
   </div>
   {%- endif -%}
 
   <div class="post-content e-content" itemprop="articleBody">
-    {% assign processed_content = content %}
-    {% assign headings = content | strip_newlines | split: '<h' %}
-    
-    {% for heading in headings offset: 1 %}
-      {% assign first_char = heading | slice: 0 %}
-      {% assign header_level = first_char | plus: 0 %}
-      
-      {% if header_level >= 2 and header_level <= 4 %}
-        {% assign rest = heading | split: '>' | shift | join: '>' %}
-        {% assign heading_text = rest | split: '</h' | first %}
-        {% assign heading_id = heading_text | strip_html | strip | slugify %}
-        
-        {% assign original_heading = '<h' | append: heading %}
-        {% assign new_heading_start = original_heading | split: '>' | first | append: ' id="' | append: heading_id | append: '">' %}
-        {% assign new_heading = original_heading | replace: (original_heading | split: '>' | first | append: '>'), new_heading_start %}
-        
-        {% assign processed_content = processed_content | replace: original_heading, new_heading %}
-      {% endif %}
-    {% endfor %}
-    
-    {{ processed_content }}
+    {{ content }}
   </div>
 
   {%- if site.disqus.shortname -%}

@@ -1,0 +1,28 @@
+{% comment %}
+  TOC Generator for Jekyll posts
+  Generates table of contents from h2/h3/h4 headings
+{% endcomment %}
+
+{%- capture toc_html -%}
+  {%- assign headings = content | strip_newlines | split: '<h' -%}
+  {%- if headings.size > 1 -%}
+    <ul class="toc-list">
+      {%- for heading in headings offset: 1 -%}
+        {%- assign first_char = heading | slice: 0 -%}
+        {%- assign header_level = first_char | plus: 0 -%}
+        
+        {%- if header_level >= 2 and header_level <= 4 -%}
+          {%- assign rest = heading | split: '>' | shift | join: '>' -%}
+          {%- assign heading_text = rest | split: '</h' | first -%}
+          {%- assign heading_id = heading_text | strip_html | strip | slugify -%}
+          
+          <li class="toc-item toc-level-{{ header_level }}">
+            <a href="#{{ heading_id }}">{{ heading_text | strip_html }}</a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endcapture -%}
+
+{{ toc_html | strip }}
