@@ -6,6 +6,18 @@ baseurl: ""
 # 主题 - minima 是 GitHub Pages 原生支持的简洁主题
 remote_theme: jekyll/minima
 
+# 启用 minima 主题的插件和功能
+minima:
+  skin: auto
+  
+# 代码高亮设置
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
 # 构建设置
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
