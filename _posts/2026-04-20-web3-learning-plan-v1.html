@@ -1,0 +1,746 @@
+---
+layout: null
+title: "Web3 DApp 前端开发学习计划（V1）"
+date: 2026-04-20
+permalink: /2026/04/20/web3-learning-plan-v1/
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web3 DApp 前端开发学习计划（V1）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-card-hover: #1a1a28;
+    --border: #2a2a3e;
+    --text-primary: #e8e8f0;
+    --text-secondary: #8888a8;
+    --text-muted: #55556a;
+    --accent-blue: #4a7dff;
+    --accent-purple: #8b5cf6;
+    --accent-emerald: #34d399;
+    --accent-amber: #fbbf24;
+    --accent-rose: #f472b6;
+    --accent-cyan: #22d3ee;
+    --gradient-1: linear-gradient(135deg, #4a7dff, #8b5cf6);
+    --gradient-2: linear-gradient(135deg, #8b5cf6, #f472b6);
+    --gradient-3: linear-gradient(135deg, #34d399, #22d3ee);
+    --gradient-4: linear-gradient(135deg, #fbbf24, #f472b6);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .noise-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    padding-top: 20px;
+  }
+
+  .header-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: rgba(74, 125, 255, 0.1);
+    border: 1px solid rgba(74, 125, 255, 0.25);
+    color: var(--accent-blue);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #8888a8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* Target stack */
+  .stack-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 28px 0 0;
+  }
+
+  .stack-tag {
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    color: var(--accent-purple);
+  }
+
+  /* Phase sections */
+  .phase {
+    margin-bottom: 48px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .phase-1 .phase-icon { background: linear-gradient(135deg, rgba(74,125,255,0.15), rgba(74,125,255,0.05)); border: 1px solid rgba(74,125,255,0.25); }
+  .phase-2 .phase-icon { background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.05)); border: 1px solid rgba(139,92,246,0.25); }
+  .phase-3 .phase-icon { background: linear-gradient(135deg, rgba(52,211,153,0.15), rgba(52,211,153,0.05)); border: 1px solid rgba(52,211,153,0.25); }
+  .phase-4 .phase-icon { background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); border: 1px solid rgba(251,191,36,0.25); }
+
+  .phase-meta h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .phase-meta .time-badge {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* Week cards */
+  .week-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .week-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(139, 92, 246, 0.2);
+  }
+
+  .week-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .week-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .week-title {
+    font-size: 16.5px;
+    font-weight: 700;
+  }
+
+  .hours-tag {
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .week-content {
+    display: grid;
+    gap: 10px;
+  }
+
+  .task-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .task-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-purple);
+    flex-shrink: 0;
+    margin-top: 8px;
+    opacity: 0.6;
+  }
+
+  .phase-1 .task-bullet { background: var(--accent-blue); }
+  .phase-2 .task-bullet { background: var(--accent-purple); }
+  .phase-3 .task-bullet { background: var(--accent-emerald); }
+  .phase-4 .task-bullet { background: var(--accent-amber); }
+
+  .highlight {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .code-ref {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent-purple);
+  }
+
+  /* Deliverable tag */
+  .deliverable {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(52, 211, 153, 0.05);
+    border: 1px solid rgba(52, 211, 153, 0.15);
+    font-size: 13px;
+    color: var(--accent-emerald);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .deliverable::before {
+    content: "✦";
+    font-size: 10px;
+  }
+
+  /* Resource section */
+  .resource-section {
+    margin-top: 56px;
+    padding: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .resource-section h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .resource-item {
+    padding: 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+  }
+
+  .resource-item .r-cat {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .resource-item .r-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  .resource-item .r-desc {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+  }
+
+  /* Summary callout */
+  .summary-callout {
+    margin-top: 40px;
+    padding: 28px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(74,125,255,0.06), rgba(139,92,246,0.06));
+    border: 1px solid rgba(139, 92, 246, 0.15);
+  }
+
+  .summary-callout h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .summary-callout p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    line-height: 1.8;
+  }
+
+  .tech-stack-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .ts-item {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  .ts-core { background: rgba(74,125,255,0.1); border: 1px solid rgba(74,125,255,0.2); color: var(--accent-blue); }
+  .ts-web3 { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2); color: var(--accent-purple); }
+  .ts-tool { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); color: var(--accent-emerald); }
+
+  @media (max-width: 640px) {
+    .header h1 { font-size: 26px; }
+    .resource-grid { grid-template-columns: 1fr; }
+    .container { padding: 24px 16px 60px; }
+    .week-card-header { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="container">
+
+  <div class="header">
+    <div class="header-badge">Vue 资深开发 → Web3 DApp 前端工程师</div>
+    <h1>16 周 Web3 转型学习计划</h1>
+    <p>基于 2026 年最新岗位 JD 和市场需求，为有多年 Vue 经验的前端开发者量身定制。前 8 周每天 1-2 小时，后 8 周每天 4+ 小时。</p>
+    <div class="stack-bar">
+      <span class="stack-tag">React + Next.js</span>
+      <span class="stack-tag">TypeScript</span>
+      <span class="stack-tag">Wagmi + Viem</span>
+      <span class="stack-tag">RainbowKit</span>
+      <span class="stack-tag">Solidity 基础</span>
+      <span class="stack-tag">Ethers.js</span>
+      <span class="stack-tag">Tailwind + Shadcn/UI</span>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 1 ============ -->
+  <div class="phase phase-1">
+    <div class="phase-header">
+      <div class="phase-icon">⚡</div>
+      <div class="phase-meta">
+        <h2>阶段一：React 速成 + 区块链认知</h2>
+        <span class="time-badge">第 1-4 周 · 每天 1-2 小时 · 共约 50-70 小时</span>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 1</div>
+          <div class="week-title">React 核心概念速通</div>
+        </div>
+        <span class="hours-tag">~10h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>用 <span class="highlight">React 官方文档</span>（react.dev）过一遍核心：JSX、组件、Props、State。你有 Vue 基础，重点理解 React 的单向数据流和 Vue 双向绑定的差异</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>掌握核心 Hooks：<span class="code-ref">useState</span> <span class="code-ref">useEffect</span> <span class="code-ref">useRef</span> <span class="code-ref">useMemo</span> <span class="code-ref">useCallback</span>，对比 Vue 的 <span class="code-ref">ref</span> / <span class="code-ref">computed</span> / <span class="code-ref">watch</span> 加深理解</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>用 Vite 创建一个 React + TypeScript 项目，写一个简单的 Todo 应用练手</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 2</div>
+          <div class="week-title">React 生态 + Next.js 入门</div>
+        </div>
+        <span class="hours-tag">~10h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">React Router</span> 或直接进入 <span class="highlight">Next.js App Router</span>（Web3 项目主流选择），理解 SSR/CSR 的区别</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习状态管理：<span class="code-ref">useContext</span> + <span class="code-ref">useReducer</span>，了解 Zustand（轻量替代 Pinia/Vuex）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>安装 <span class="highlight">Tailwind CSS + Shadcn/UI</span>，用它们重构 Week1 的 Todo 项目，熟悉 React 的样式方案</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 3</div>
+          <div class="week-title">区块链基础认知</div>
+        </div>
+        <span class="hours-tag">~10h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span><span class="highlight">理解区块链核心概念</span>：区块、链、共识机制（PoW/PoS）、公钥/私钥、钱包地址、Gas 费、交易签名</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>安装 <span class="highlight">MetaMask</span> 钱包，在测试网（Sepolia）领取测试币，实际操作几笔转账，体验完整交易流程</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>了解以太坊生态：EVM、智能合约是什么、DeFi/NFT/DAO 基本概念。推荐看 Ethereum.org 官方教程</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>下载并使用 3-5 个主流 DApp（Uniswap、OpenSea、Aave 等），以用户视角理解交互流程</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 4</div>
+          <div class="week-title">Solidity 入门 + 智能合约初体验</div>
+        </div>
+        <span class="hours-tag">~10h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>用 <span class="highlight">Remix IDE</span>（在线编辑器）学习 Solidity 基础语法：变量、函数、修饰符、事件</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>写一个简单的存储合约，部署到 Sepolia 测试网，理解部署→调用→读取的完整流程</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>了解 <span class="highlight">ERC-20</span>（代币标准）和 <span class="highlight">ERC-721</span>（NFT 标准）的基本结构，不需要精通，但前端必须看得懂 ABI</span></div>
+      </div>
+      <div class="deliverable">阶段交付：能用 React + Next.js 写基本页面，理解区块链运作原理，能读懂简单的 Solidity 合约</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 2 ============ -->
+  <div class="phase phase-2">
+    <div class="phase-header">
+      <div class="phase-icon">🔗</div>
+      <div class="phase-meta">
+        <h2>阶段二：Web3 前端核心技术栈</h2>
+        <span class="time-badge">第 5-8 周 · 每天 1-2 小时 · 共约 50-70 小时</span>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 5</div>
+          <div class="week-title">Viem + Ethers.js — 链上交互基础</div>
+        </div>
+        <span class="hours-tag">~12h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">Viem</span>（2026 行业首选的 TypeScript 以太坊库）：创建 PublicClient，读取链上数据（余额、区块号、合约状态）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>理解 ABI 编码/解码，用 Viem 调用你在 Week4 部署的合约</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>顺带了解 <span class="code-ref">ethers.js</span>，很多老项目还在用，面试可能会问到</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 6</div>
+          <div class="week-title">Wagmi + RainbowKit — 钱包连接与合约交互</div>
+        </div>
+        <span class="hours-tag">~12h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>用 <span class="highlight">Wagmi</span>（React Hooks for Ethereum）搭配 Next.js：<span class="code-ref">useAccount</span> <span class="code-ref">useBalance</span> <span class="code-ref">useReadContract</span> <span class="code-ref">useWriteContract</span></span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>集成 <span class="highlight">RainbowKit</span> 实现钱包连接弹窗，支持 MetaMask / WalletConnect 等主流钱包</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>搭建一个完整的钱包连接页面：连接→显示地址→显示余额→断开。这是最基础的 Web3 前端交互</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>理解 Wagmi 底层是 Viem + TanStack Query 的封装，学会处理 loading / error / success 状态</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 7</div>
+          <div class="week-title">第一个 DApp 实战：ERC-20 代币仪表盘</div>
+        </div>
+        <span class="hours-tag">~14h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span><span class="highlight">项目实战</span>：做一个代币仪表盘 DApp，技术栈 Next.js + Wagmi + RainbowKit + Tailwind</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>功能：连接钱包 → 显示 ETH 和任意 ERC-20 代币余额 → 代币转账 → 交易状态追踪</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>重点练习：交易全链路状态反馈（idle → pending → mining → success/error），这是 JD 常考的</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>部署到 Vercel，开始积累你的 <span class="highlight">GitHub 项目作品集</span></span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 8</div>
+          <div class="week-title">第二个 DApp 实战：NFT 铸造页面</div>
+        </div>
+        <span class="hours-tag">~14h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>用 Hardhat 或 Foundry 部署一个简单的 ERC-721 合约到测试网</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>写一个 <span class="highlight">NFT Mint 页面</span>：展示 NFT 图片 → 连接钱包 → Mint → 展示铸造结果</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习 IPFS 存储元数据，了解 NFT 图片/JSON 的存储方式</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>做好 UI/UX：响应式布局、加载动画、错误提示。Web3 项目很看重前端体验</span></div>
+      </div>
+      <div class="deliverable">阶段交付：GitHub 上有 2 个可运行的 DApp 项目，掌握 Web3 前端核心技术栈</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 3 ============ -->
+  <div class="phase phase-3">
+    <div class="phase-header">
+      <div class="phase-icon">🚀</div>
+      <div class="phase-meta">
+        <h2>阶段三：进阶项目 + 深度技能</h2>
+        <span class="time-badge">第 9-12 周 · 每天 4-5 小时 · 共约 120-140 小时</span>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 9</div>
+          <div class="week-title">DeFi 前端实战：Token Swap 界面</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>做一个仿 Uniswap 的 <span class="highlight">Token Swap 前端</span>（可以对接测试网 DEX 合约或 mock 数据）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="code-ref">multicall</span> 批量读取链上数据，优化 RPC 请求次数</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>处理代币 Approve → Swap 的两步交易流程，学习 allowance 机制</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>实现实时价格更新、滑点设置等 DeFi 常见交互</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 10</div>
+          <div class="week-title">The Graph + 链上数据展示</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">The Graph</span> 协议：写 Subgraph 索引链上事件，用 GraphQL 查询数据</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>给 Week9 的 Swap 项目加上交易历史页面：从 Subgraph 拉取历史交易记录并展示</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">WebSocket / 事件监听</span>：用 Viem 的 <span class="code-ref">watchContractEvent</span> 实时监听链上事件并更新 UI</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 11</div>
+          <div class="week-title">综合项目：DeFi Dashboard</div>
+        </div>
+        <span class="hours-tag">~28h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span><span class="highlight">重头项目</span>：做一个 DeFi 仪表盘，展示用户在多个协议中的资产、收益、交易记录</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>技术要点：多链支持（Ethereum + Polygon/Arbitrum）、复杂状态管理、数据可视化（用 Recharts）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>性能优化：懒加载、请求缓存策略（TanStack Query staleTime）、骨架屏</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>移动端适配（Web3 JD 普遍要求），确保钱包连接在手机端也能正常工作</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 12</div>
+          <div class="week-title">安全意识 + 代码质量 + 开源贡献</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>前端安全：防范 XSS 攻击、钱包签名钓鱼、恶意合约交互。了解 <span class="code-ref">EIP-712</span> 签名验证</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>代码质量：用 ESLint + Prettier 规范代码，写单元测试（Vitest），学会用 TypeScript 严格模式</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>找 1-2 个 <span class="highlight">开源 Web3 项目</span>（如 scaffold-eth-2）提交 PR：修 bug、补文档、加测试都行</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>完善 GitHub profile，给每个项目写好 README（英文），配上截图和演示链接</span></div>
+      </div>
+      <div class="deliverable">阶段交付：GitHub 上有 4-5 个项目 + 开源贡献记录，具备中级 Web3 前端能力</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 4 ============ -->
+  <div class="phase phase-4">
+    <div class="phase-header">
+      <div class="phase-icon">🎯</div>
+      <div class="phase-meta">
+        <h2>阶段四：求职冲刺</h2>
+        <span class="time-badge">第 13-16 周 · 每天 4-6 小时 · 含面试准备</span>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 13</div>
+          <div class="week-title">简历打磨 + 面试题库</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span><span class="highlight">重写简历</span>：突出 Vue → React 转型 + Web3 项目经验。用数据说话（优化了 X%、处理了 Y 类场景）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>准备高频面试题：React Hooks 原理、Wagmi 工作流、钱包连接流程、交易生命周期、EVM 基础</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>刷 Web3 前端特有面试题：如何防止重复提交交易？如何处理链切换？如何做 Gas 估算？</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>准备英文自我介绍和项目介绍（Web3 公司多远程，英文沟通是加分项）</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 14</div>
+          <div class="week-title">海投 + 社区曝光</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>在 <span class="highlight">web3.career</span>、<span class="highlight">remote3.co</span>、<span class="highlight">cryptocurrencyjobs.co</span>、LinkedIn 大量投递，每天 5-10 个岗位</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>加入 Web3 开发者社区：Discord（Ethereum、Wagmi）、Twitter/X 关注 Web3 项目方，参与讨论</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>写 1-2 篇技术博客（中英文皆可）：分享 Vue 转 React + Web3 的经验，发到 Mirror/Medium</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>参加 Web3 Hackathon（如 ETHGlobal），即使拿不到奖，经历本身就是简历亮点</span></div>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 15-16</div>
+          <div class="week-title">面试实战 + 查漏补缺</div>
+        </div>
+        <span class="hours-tag">~50h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>积极面试，把每次面试当作学习机会，记录面试题并查漏补缺</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>常见编码面试：现场实现钱包连接组件、读取合约数据并渲染、处理交易状态的 React 组件</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>系统设计题准备：如何设计一个 DEX 前端架构？如何做多链适配？如何优化 DApp 性能？</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>持续优化项目，根据面试反馈迭代代码质量和功能</span></div>
+      </div>
+      <div class="deliverable">阶段目标：收到 1-3 个 offer，成功入职 Web3 DApp 前端开发岗</div>
+    </div>
+  </div>
+
+  <!-- ============ RESOURCES ============ -->
+  <div class="resource-section">
+    <h3>📚 核心学习资源</h3>
+    <div class="resource-grid">
+      <div class="resource-item">
+        <div class="r-cat">React</div>
+        <div class="r-name">react.dev 官方文档</div>
+        <div class="r-desc">最好的 React 学习资料，有 Vue 基础 3-5 天可过完</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Next.js</div>
+        <div class="r-name">nextjs.org/learn</div>
+        <div class="r-desc">官方交互式教程，边学边做</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Web3 入门</div>
+        <div class="r-name">ethereum.org/developers</div>
+        <div class="r-desc">以太坊官方开发者入门教程</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Solidity</div>
+        <div class="r-name">CryptoZombies</div>
+        <div class="r-desc">游戏化学 Solidity，轻松有趣</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Wagmi</div>
+        <div class="r-name">wagmi.sh 官方文档</div>
+        <div class="r-desc">React Hooks for Ethereum，必读</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Viem</div>
+        <div class="r-name">viem.sh 官方文档</div>
+        <div class="r-desc">TypeScript 以太坊客户端，Wagmi 底层</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">实战脚手架</div>
+        <div class="r-name">scaffold-eth-2</div>
+        <div class="r-desc">最佳 DApp 全栈学习模板，Next.js + Wagmi</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">求职平台</div>
+        <div class="r-name">web3.career / remote3.co</div>
+        <div class="r-desc">Web3 专业招聘网站，远程岗位为主</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUMMARY ============ -->
+  <div class="summary-callout">
+    <h3>💡 关键策略提醒</h3>
+    <p><strong>你的核心优势是前端工程化能力。</strong>多年 Vue 经验意味着你对组件化、状态管理、性能优化的理解已经很深。React 只是换了语法，Web3 只是加了一层链上交互。不要被新概念吓到。</p>
+    <p><strong>项目 > 证书。</strong>Web3 行业看的是你做了什么，GitHub 就是你的简历。每个项目都要部署上线、写好 README、配上截图。</p>
+    <p><strong>前 8 周利用碎片时间打基础，后 8 周集中火力做项目和求职。</strong>这个节奏刚好匹配你的时间安排。</p>
+    <p><strong>英文能力是隐藏加分项。</strong>Web3 岗位大量远程，文档和社区都是英文环境，现在就开始用英文写代码注释和 README。</p>
+    <div class="tech-stack-summary">
+      <span class="ts-item ts-core">React</span>
+      <span class="ts-item ts-core">Next.js</span>
+      <span class="ts-item ts-core">TypeScript</span>
+      <span class="ts-item ts-core">Tailwind</span>
+      <span class="ts-item ts-web3">Wagmi</span>
+      <span class="ts-item ts-web3">Viem</span>
+      <span class="ts-item ts-web3">RainbowKit</span>
+      <span class="ts-item ts-web3">Ethers.js</span>
+      <span class="ts-item ts-web3">Solidity 基础</span>
+      <span class="ts-item ts-tool">The Graph</span>
+      <span class="ts-item ts-tool">Hardhat</span>
+      <span class="ts-item ts-tool">IPFS</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
