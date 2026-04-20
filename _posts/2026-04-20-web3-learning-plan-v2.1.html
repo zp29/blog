@@ -1,0 +1,1300 @@
+---
+layout: null
+title: "Web3 DApp 前端开发学习计划（V2.1）"
+date: 2026-04-20
+permalink: /2026/04/20/web3-learning-plan/
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web3 DApp 前端开发学习计划 v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-card-hover: #1a1a28;
+    --border: #2a2a3e;
+    --text-primary: #e8e8f0;
+    --text-secondary: #8888a8;
+    --text-muted: #55556a;
+    --accent-blue: #4a7dff;
+    --accent-purple: #8b5cf6;
+    --accent-emerald: #34d399;
+    --accent-amber: #fbbf24;
+    --accent-rose: #f472b6;
+    --accent-cyan: #22d3ee;
+    --accent-orange: #fb923c;
+    --accent-sky: #38bdf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .noise-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    padding-top: 20px;
+  }
+
+  .header-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: rgba(74, 125, 255, 0.1);
+    border: 1px solid rgba(74, 125, 255, 0.25);
+    color: var(--accent-blue);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  .version-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(251, 146, 60, 0.12);
+    border: 1px solid rgba(251, 146, 60, 0.3);
+    color: var(--accent-orange);
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  .header h1 {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #8888a8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Target stack */
+  .stack-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 28px 0 0;
+  }
+
+  .stack-tag {
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    color: var(--accent-purple);
+  }
+
+  .stack-tag.sol {
+    background: rgba(251, 146, 60, 0.08);
+    border: 1px solid rgba(251, 146, 60, 0.25);
+    color: var(--accent-orange);
+  }
+
+  /* Strategy callout */
+  .strategy-box {
+    margin-bottom: 48px;
+    padding: 24px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(251,146,60,0.06), rgba(139,92,246,0.06));
+    border: 1px solid rgba(251, 146, 60, 0.15);
+  }
+
+  .strategy-box h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--accent-orange);
+  }
+
+  .strategy-box p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .strategy-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .strat-card {
+    padding: 16px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+  }
+
+  .strat-card .sc-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .strat-card .sc-label.frontend { color: var(--accent-purple); }
+  .strat-card .sc-label.solidity { color: var(--accent-orange); }
+
+  .strat-card .sc-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Phase sections */
+  .phase {
+    margin-bottom: 48px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .phase-1 .phase-icon { background: linear-gradient(135deg, rgba(74,125,255,0.15), rgba(74,125,255,0.05)); border: 1px solid rgba(74,125,255,0.25); }
+  .phase-2 .phase-icon { background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.05)); border: 1px solid rgba(139,92,246,0.25); }
+  .phase-3 .phase-icon { background: linear-gradient(135deg, rgba(52,211,153,0.15), rgba(52,211,153,0.05)); border: 1px solid rgba(52,211,153,0.25); }
+  .phase-4 .phase-icon { background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); border: 1px solid rgba(251,191,36,0.25); }
+
+  .phase-meta h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .phase-meta .time-badge {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* Week cards */
+  .week-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .week-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(139, 92, 246, 0.2);
+  }
+
+  .week-card.has-solidity {
+    border-left: 3px solid rgba(251, 146, 60, 0.4);
+  }
+
+  .week-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .week-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .week-title {
+    font-size: 16.5px;
+    font-weight: 700;
+  }
+
+  .hours-tag {
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .week-content {
+    display: grid;
+    gap: 10px;
+  }
+
+  .task-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .task-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 8px;
+    opacity: 0.6;
+  }
+
+  .phase-1 .task-bullet { background: var(--accent-blue); }
+  .phase-2 .task-bullet { background: var(--accent-purple); }
+  .phase-3 .task-bullet { background: var(--accent-emerald); }
+  .phase-4 .task-bullet { background: var(--accent-amber); }
+
+  .task-bullet.sol-bullet {
+    background: var(--accent-orange) !important;
+    opacity: 0.8;
+  }
+
+  .highlight {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .code-ref {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent-purple);
+  }
+
+  .code-ref.sol-ref {
+    background: rgba(251, 146, 60, 0.1);
+    color: var(--accent-orange);
+  }
+
+  /* Solidity marker */
+  .sol-tag {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    background: rgba(251, 146, 60, 0.1);
+    border: 1px solid rgba(251, 146, 60, 0.25);
+    color: var(--accent-orange);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* Deliverable tag */
+  .deliverable {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(52, 211, 153, 0.05);
+    border: 1px solid rgba(52, 211, 153, 0.15);
+    font-size: 13px;
+    color: var(--accent-emerald);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .deliverable::before {
+    content: "✦";
+    font-size: 10px;
+  }
+
+  /* NEW indicator */
+  .new-tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    background: rgba(251, 146, 60, 0.15);
+    color: var(--accent-orange);
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  .updated-tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    background: rgba(34, 211, 238, 0.12);
+    color: var(--accent-cyan);
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  /* Resource section */
+  .resource-section {
+    margin-top: 56px;
+    padding: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .resource-section h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .resource-item {
+    padding: 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+  }
+
+  .resource-item.sol-resource {
+    border-color: rgba(251, 146, 60, 0.15);
+  }
+
+  .resource-item .r-cat {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .resource-item.sol-resource .r-cat {
+    color: var(--accent-orange);
+  }
+
+  .resource-item .r-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  .resource-item .r-desc {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+  }
+
+  /* Summary callout */
+  .summary-callout {
+    margin-top: 40px;
+    padding: 28px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(74,125,255,0.06), rgba(139,92,246,0.06));
+    border: 1px solid rgba(139, 92, 246, 0.15);
+  }
+
+  .summary-callout h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .summary-callout p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    line-height: 1.8;
+  }
+
+  .tech-stack-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .ts-item {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  .ts-core { background: rgba(74,125,255,0.1); border: 1px solid rgba(74,125,255,0.2); color: var(--accent-blue); }
+  .ts-web3 { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2); color: var(--accent-purple); }
+  .ts-sol { background: rgba(251,146,60,0.1); border: 1px solid rgba(251,146,60,0.2); color: var(--accent-orange); }
+  .ts-tool { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); color: var(--accent-emerald); }
+  .ts-eng { background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); color: var(--accent-sky); }
+
+  /* English reading section in week cards */
+  .eng-section {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba(56, 189, 248, 0.04);
+    border: 1px solid rgba(56, 189, 248, 0.12);
+  }
+
+  .eng-section-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent-sky);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .eng-links {
+    display: grid;
+    gap: 7px;
+  }
+
+  .eng-link-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .eng-link-item .link-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-sky);
+    flex-shrink: 0;
+    margin-top: 7px;
+    opacity: 0.5;
+  }
+
+  .eng-link-item a {
+    color: var(--accent-sky);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .eng-link-item a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .eng-tag {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: var(--accent-sky);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .week-card.has-english {
+    border-right: 3px solid rgba(56, 189, 248, 0.3);
+  }
+
+  /* Oral strategy box */
+  .oral-box {
+    margin-top: 40px;
+    margin-bottom: 0;
+    padding: 24px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(139,92,246,0.04));
+    border: 1px solid rgba(56, 189, 248, 0.15);
+  }
+
+  .oral-box h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--accent-sky);
+  }
+
+  .oral-box p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .oral-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .oral-step {
+    padding: 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+  }
+
+  .oral-step .os-phase {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-sky);
+    margin-bottom: 6px;
+  }
+
+  .oral-step .os-desc {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Changelog */
+  .changelog {
+    margin-bottom: 48px;
+    padding: 20px 24px;
+    background: var(--bg-card);
+    border: 1px solid rgba(251, 146, 60, 0.2);
+    border-radius: 14px;
+  }
+
+  .changelog h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-orange);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .changelog ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .changelog li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .changelog li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent-orange);
+  }
+
+  @media (max-width: 640px) {
+    .header h1 { font-size: 26px; }
+    .resource-grid { grid-template-columns: 1fr; }
+    .strategy-cols { grid-template-columns: 1fr; }
+    .oral-steps { grid-template-columns: 1fr; }
+    .container { padding: 24px 16px 60px; }
+    .week-card-header { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="container">
+
+  <div class="header">
+    <div class="header-badge">Vue 资深开发 → Web3 DApp 前端工程师（能写合约）</div>
+    <h1>16 周 Web3 转型学习计划 <span class="version-badge">v2.1</span></h1>
+    <p>前端为主线 + Solidity 为辅助 + 英语同步提升。目标定位："能写合约、能用英文沟通的 Web3 前端"。前 8 周每天 1-2 小时，后 8 周每天 4+ 小时。每周配有英文阅读材料，边学技术边练英语。</p>
+    <div class="stack-bar">
+      <span class="stack-tag">React + Next.js</span>
+      <span class="stack-tag">TypeScript</span>
+      <span class="stack-tag">Wagmi + Viem</span>
+      <span class="stack-tag">RainbowKit</span>
+      <span class="stack-tag">Tailwind + Shadcn/UI</span>
+      <span class="stack-tag sol">Solidity</span>
+      <span class="stack-tag sol">Hardhat / Foundry</span>
+      <span class="stack-tag sol">OpenZeppelin</span>
+    </div>
+  </div>
+
+  <!-- Changelog -->
+  <div class="changelog">
+    <h3>📝 v2.1 更新说明（相比 v2.0）</h3>
+    <ul>
+      <li>每周卡片新增「本周英文阅读」板块，配有 3-5 个精选链接，跟着学习进度同步练英文阅读</li>
+      <li>新增口语提升策略模块，分三阶段制定务实的口语训练方案</li>
+      <li>Week 14 面试准备增加英文自我介绍和项目描述的准备任务</li>
+      <li>资源区新增英语学习专区（技术博客、YouTube 频道、口语练习平台）</li>
+      <li>含英文阅读任务的周卡右侧标有蓝色边框，便于识别</li>
+      <li>所有 v2.0 的 Solidity 增强内容保留不变（橙色边框标记）</li>
+    </ul>
+  </div>
+
+  <!-- Strategy -->
+  <div class="strategy-box">
+    <h3>🎯 核心策略：前端主线 + Solidity 辅线</h3>
+    <p>不做"纯 Solidity 开发"——那个方向入门门槛太高（岗位普遍要求 2 年以上生产合约经验），3-4 个月达不到。而是把 Solidity 作为前端的<strong>差异化武器</strong>，让你在前端岗位面试中脱颖而出。</p>
+    <div class="strategy-cols">
+      <div class="strat-card">
+        <div class="sc-label frontend">前端主线 · 约 70% 时间</div>
+        <div class="sc-desc">React + Next.js + Wagmi + Viem + RainbowKit，做 4-5 个可部署的 DApp 项目，这是你拿到面试的核心竞争力</div>
+      </div>
+      <div class="strat-card">
+        <div class="sc-label solidity">Solidity 辅线 · 约 30% 时间</div>
+        <div class="sc-desc">能自主编写 ERC-20 / ERC-721 合约，会用 Hardhat/Foundry 测试部署，了解常见安全漏洞，面试时能聊合约层面的问题</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 1 ============ -->
+  <div class="phase phase-1">
+    <div class="phase-header">
+      <div class="phase-icon">⚡</div>
+      <div class="phase-meta">
+        <h2>阶段一：React 速成 + 区块链认知</h2>
+        <span class="time-badge">第 1-4 周 · 每天 1-2 小时 · 共约 56-80 小时</span>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 1</div>
+          <div class="week-title">React 核心概念速通</div>
+        </div>
+        <span class="hours-tag">~10h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>用 <span class="highlight">React 官方文档</span>（react.dev）过一遍核心：JSX、组件、Props、State。你有 Vue 基础，重点理解 React 的单向数据流和 Vue 双向绑定的差异</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>掌握核心 Hooks：<span class="code-ref">useState</span> <span class="code-ref">useEffect</span> <span class="code-ref">useRef</span> <span class="code-ref">useMemo</span> <span class="code-ref">useCallback</span>，对比 Vue 的 <span class="code-ref">ref</span> / <span class="code-ref">computed</span> / <span class="code-ref">watch</span> 加深理解</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>用 Vite 创建一个 React + TypeScript 项目，写一个简单的 Todo 应用练手</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>React 官方教程（直接读英文版，强迫自己别切中文）<a href="https://react.dev/learn">react.dev/learn</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Josh Comeau — 写给初学者的 React 指南，语言极其友好 <a href="https://www.joshwcomeau.com/react/common-beginner-mistakes/">Common Beginner Mistakes</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Dan Abramov — A Complete Guide to useEffect，经典长文 <a href="https://overreacted.io/a-complete-guide-to-useeffect/">overreacted.io</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Kent C. Dodds — How React Hooks Work <a href="https://kentcdodds.com/blog/react-hooks-pitfalls">React Hooks Pitfalls</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 2</div>
+          <div class="week-title">React 生态 + Next.js 入门</div>
+        </div>
+        <span class="hours-tag">~10h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">React Router</span> 或直接进入 <span class="highlight">Next.js App Router</span>（Web3 项目主流选择），理解 SSR/CSR 的区别</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习状态管理：<span class="code-ref">useContext</span> + <span class="code-ref">useReducer</span>，了解 Zustand（轻量替代 Pinia/Vuex）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>安装 <span class="highlight">Tailwind CSS + Shadcn/UI</span>，用它们重构 Week1 的 Todo 项目，熟悉 React 的样式方案</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Next.js 官方交互教程（英文，边做边学）<a href="https://nextjs.org/learn">nextjs.org/learn</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Lee Robinson — Next.js App Router 最佳实践 <a href="https://leerob.io/">leerob.io</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Tailwind CSS 官方文档（写得非常清晰）<a href="https://tailwindcss.com/docs">tailwindcss.com/docs</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Shadcn/UI 文档和组件源码 <a href="https://ui.shadcn.com/">ui.shadcn.com</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 3</div>
+          <div class="week-title">区块链基础认知</div>
+        </div>
+        <span class="hours-tag">~10h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span><span class="highlight">理解区块链核心概念</span>：区块、链、共识机制（PoW/PoS）、公钥/私钥、钱包地址、Gas 费、交易签名</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>安装 <span class="highlight">MetaMask</span> 钱包，在测试网（Sepolia）领取测试币，实际操作几笔转账，体验完整交易流程</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>了解以太坊生态：EVM、智能合约是什么、DeFi/NFT/DAO 基本概念。推荐看 Ethereum.org 官方教程</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>下载并使用 3-5 个主流 DApp（Uniswap、OpenSea、Aave 等），以用户视角理解交互流程</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>以太坊官方开发者教程（英文，这是你最重要的 Web3 入门文档）<a href="https://ethereum.org/en/developers/">ethereum.org/developers</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Nader Dabit — The Complete Guide to Full Stack Web3 Development <a href="https://dev.to/dabit3/the-complete-guide-to-full-stack-web3-development-4g74">dev.to/dabit3</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Preethi Kasireddy — How Does Ethereum Work Anyway? <a href="https://preethikasireddy.com/post/how-does-ethereum-work-anyway">preethikasireddy.com</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>YouTube — Whiteboard Crypto 频道（动画讲解区块链概念，语速慢，练听力入门）<a href="https://www.youtube.com/@WhiteboardCrypto">@WhiteboardCrypto</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-solidity has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 4 <span class="updated-tag">UPDATED</span></div>
+          <div class="week-title">Solidity 深入学习 + 开发工具链 <span class="sol-tag">Solidity</span></div>
+        </div>
+        <span class="hours-tag">~14h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>用 <span class="highlight">Remix IDE</span> 学 Solidity 基础语法：变量类型（uint/address/mapping）、函数、修饰符（modifier）、事件（event）、错误处理（require/revert）</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span><span class="highlight">通关 CryptoZombies</span> 全部课程（约 6-8 小时）——这是最高效的 Solidity 入门方式，游戏化边学边写，覆盖 struct、mapping、继承、接口等核心概念</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>精读 <span class="highlight">ERC-20 标准</span>完整代码（用 OpenZeppelin 实现），理解 <span class="code-ref sol-ref">transfer</span> <span class="code-ref sol-ref">approve</span> <span class="code-ref sol-ref">transferFrom</span> <span class="code-ref sol-ref">allowance</span> 的完整机制</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>精读 <span class="highlight">ERC-721 标准</span>完整代码，理解 <span class="code-ref sol-ref">mint</span> <span class="code-ref sol-ref">tokenURI</span> <span class="code-ref sol-ref">ownerOf</span> 等核心方法</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>在 Remix 中自己动手写一个简单的 ERC-20 代币合约，部署到 Sepolia 测试网，理解"编写→编译→部署→调用"完整流程</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Solidity 官方文档（英文，至少读 Introduction 和 Solidity by Example 章节）<a href="https://docs.soliditylang.org/">docs.soliditylang.org</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>OpenZeppelin — ERC-20 合约源码与文档 <a href="https://docs.openzeppelin.com/contracts/erc20">docs.openzeppelin.com</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Solidity by Example — 每个例子短小精悍，代码+英文解释 <a href="https://solidity-by-example.org/">solidity-by-example.org</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>YouTube — Patrick Collins 的 Solidity 教程（语速适中，最受欢迎的 Solidity 教学频道）<a href="https://www.youtube.com/@PatrickAlphaC">@PatrickAlphaC</a></span></div>
+        </div>
+      </div>
+      <div class="deliverable">阶段交付：能用 React + Next.js 写基本页面，通关 CryptoZombies，能独立编写简单的 ERC-20 合约</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 2 ============ -->
+  <div class="phase phase-2">
+    <div class="phase-header">
+      <div class="phase-icon">🔗</div>
+      <div class="phase-meta">
+        <h2>阶段二：Web3 前端核心技术栈</h2>
+        <span class="time-badge">第 5-8 周 · 每天 1-2 小时 · 共约 56-80 小时</span>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 5</div>
+          <div class="week-title">Viem + Ethers.js — 链上交互基础</div>
+        </div>
+        <span class="hours-tag">~12h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">Viem</span>（2026 行业首选的 TypeScript 以太坊库）：创建 PublicClient，读取链上数据（余额、区块号、合约状态）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>理解 ABI 编码/解码，用 Viem 调用你在 Week4 部署的 ERC-20 合约，读取 <span class="code-ref">balanceOf</span>、<span class="code-ref">totalSupply</span></span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>顺带了解 <span class="code-ref">ethers.js</span>，很多老项目还在用，面试可能会问到两者的区别</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Viem 官方文档（从此开始所有工具文档都读英文原版）<a href="https://viem.sh/">viem.sh</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Ethers.js v6 文档（了解与 Viem 的对比）<a href="https://docs.ethers.org/v6/">docs.ethers.org</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Viem 作者 Jake 的介绍文章 — Why Viem <a href="https://viem.sh/docs/introduction">viem.sh/docs/introduction</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 6</div>
+          <div class="week-title">Wagmi + RainbowKit — 钱包连接与合约交互</div>
+        </div>
+        <span class="hours-tag">~12h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>用 <span class="highlight">Wagmi</span>（React Hooks for Ethereum）搭配 Next.js：<span class="code-ref">useAccount</span> <span class="code-ref">useBalance</span> <span class="code-ref">useReadContract</span> <span class="code-ref">useWriteContract</span></span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>集成 <span class="highlight">RainbowKit</span> 实现钱包连接弹窗，支持 MetaMask / WalletConnect 等主流钱包</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>搭建一个完整的钱包连接页面：连接→显示地址→显示余额→断开。这是最基础的 Web3 前端交互</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>理解 Wagmi 底层是 Viem + TanStack Query 的封装，学会处理 loading / error / success 状态</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Wagmi 官方文档（重点读 Getting Started 和 Hooks 章节）<a href="https://wagmi.sh/">wagmi.sh</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>RainbowKit 官方文档 <a href="https://www.rainbowkit.com/docs/introduction">rainbowkit.com/docs</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>scaffold-eth-2 README 和文档（优秀的开源项目文档范例）<a href="https://github.com/scaffold-eth/scaffold-eth-2">GitHub</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>YouTube — Nader Dabit 的 Web3 前端教程系列 <a href="https://www.youtube.com/@naderdabit">@naderdabit</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 7</div>
+          <div class="week-title">第一个 DApp 实战：ERC-20 代币仪表盘</div>
+        </div>
+        <span class="hours-tag">~14h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span><span class="highlight">项目实战</span>：做一个代币仪表盘 DApp，技术栈 Next.js + Wagmi + RainbowKit + Tailwind</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>功能：连接钱包 → 显示 ETH 和任意 ERC-20 代币余额 → 代币转账 → 交易状态追踪</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>重点练习：交易全链路状态反馈（idle → pending → mining → success/error），这是 JD 常考的</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>部署到 Vercel，开始积累你的 <span class="highlight">GitHub 项目作品集</span></span></div>
+      </div>
+    </div>
+
+    <div class="week-card has-solidity">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 8 <span class="updated-tag">UPDATED</span></div>
+          <div class="week-title">第二个 DApp：自己写合约 + NFT Mint 页面 <span class="sol-tag">Solidity</span></div>
+        </div>
+        <span class="hours-tag">~16h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>安装 <span class="highlight">Hardhat</span> 开发环境，学习项目结构：contracts / scripts / test 目录</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span><span class="highlight">自己从头编写</span>一个 ERC-721 合约（不是复制粘贴）：继承 OpenZeppelin、实现 mint 函数、设置 tokenURI、添加 maxSupply 限制</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>用 Hardhat 写测试脚本（用 JavaScript/TypeScript），学会 <span class="code-ref sol-ref">npx hardhat test</span> 跑测试</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>部署到 Sepolia 测试网，用 <span class="code-ref sol-ref">npx hardhat run scripts/deploy.js --network sepolia</span></span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>写 <span class="highlight">NFT Mint 前端页面</span>：展示 NFT 图片 → 连接钱包 → Mint → 展示铸造结果 → 查看已铸造数量</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习 IPFS 存储元数据（Pinata），做好 UI/UX：响应式布局、Mint 进度动画、错误提示</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Hardhat 官方教程 <a href="https://hardhat.org/tutorial">hardhat.org/tutorial</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>OpenZeppelin — ERC-721 文档与教程 <a href="https://docs.openzeppelin.com/contracts/erc721">docs.openzeppelin.com/erc721</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Pinata IPFS 文档 <a href="https://docs.pinata.cloud/">docs.pinata.cloud</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Alchemy — How to Create an NFT（完整英文教程）<a href="https://docs.alchemy.com/docs/how-to-create-an-nft">docs.alchemy.com</a></span></div>
+        </div>
+      </div>
+      <div class="deliverable">阶段交付：GitHub 上有 2 个可运行的 DApp 项目，其中 NFT 项目是自己写的合约 + 自己写的前端</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 3 ============ -->
+  <div class="phase phase-3">
+    <div class="phase-header">
+      <div class="phase-icon">🚀</div>
+      <div class="phase-meta">
+        <h2>阶段三：进阶项目 + Solidity 专项 + 深度技能</h2>
+        <span class="time-badge">第 9-13 周 · 每天 4-5 小时 · 共约 130-160 小时</span>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 9</div>
+          <div class="week-title">DeFi 前端实战：Token Swap 界面</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>做一个仿 Uniswap 的 <span class="highlight">Token Swap 前端</span>（可以对接测试网 DEX 合约或 mock 数据）</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="code-ref">multicall</span> 批量读取链上数据，优化 RPC 请求次数</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>处理代币 Approve → Swap 的两步交易流程，学习 allowance 机制</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>实现实时价格更新、滑点设置等 DeFi 常见交互</span></div>
+      </div>
+    </div>
+
+    <div class="week-card has-solidity">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 10 <span class="new-tag">NEW</span></div>
+          <div class="week-title">Solidity 专项周：Foundry + Gas 优化 + 安全攻防 <span class="sol-tag">Solidity</span></div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span><span class="highlight">学习 Foundry</span> 框架（行业正在从 Hardhat 转向 Foundry）：<span class="code-ref sol-ref">forge init</span> 创建项目，<span class="code-ref sol-ref">forge build</span> 编译，<span class="code-ref sol-ref">forge test</span> 测试——Foundry 的测试也是用 Solidity 写的，进一步加深语言掌握</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span><span class="highlight">Gas 优化基础</span>：理解 storage vs memory vs calldata 的 Gas 开销差异，学会用 <span class="code-ref sol-ref">forge test --gas-report</span> 分析 Gas 消耗，掌握常见优化技巧（变量打包、使用 uint256、避免重复读取 storage）</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span><span class="highlight">安全漏洞实战</span>：完成 <span class="highlight">Ethernaut</span>（OpenZeppelin 出品的 CTF 挑战）前 10 关——亲手利用重入攻击（Reentrancy）、整数溢出、tx.origin 钓鱼等经典漏洞</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>学习安全最佳实践：Checks-Effects-Interactions 模式、<span class="code-ref sol-ref">ReentrancyGuard</span>、Access Control（Ownable / Role）</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>了解代理合约模式（Proxy Pattern）：透明代理 vs UUPS，理解为什么合约需要可升级以及升级的风险</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Foundry Book 官方文档 <a href="https://book.getfoundry.sh/">book.getfoundry.sh</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Ethernaut 挑战官网（边做边读英文题目描述）<a href="https://ethernaut.openzeppelin.com/">ethernaut.openzeppelin.com</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>OpenZeppelin — Proxy Patterns 解析 <a href="https://blog.openzeppelin.com/proxy-patterns">blog.openzeppelin.com</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>SWC Registry — 智能合约弱点分类（安全漏洞参考，英文）<a href="https://swcregistry.io/">swcregistry.io</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>YouTube — Smart Contract Programmer（Solidity 安全专题）<a href="https://www.youtube.com/@smartcontractprogrammer">@smartcontractprogrammer</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-solidity has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 11 <span class="updated-tag">UPDATED</span></div>
+          <div class="week-title">全栈 DApp 项目：自写 Staking 合约 + 前端 <span class="sol-tag">Solidity</span></div>
+        </div>
+        <span class="hours-tag">~28h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span><span class="highlight">核心项目</span>：自己编写一个 <span class="highlight">Token Staking（质押）合约</span>——用户存入 ERC-20 代币，按时间获得奖励，可随时提取。这是 DeFi 最基础的原语之一</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>合约功能：<span class="code-ref sol-ref">stake()</span> 质押、<span class="code-ref sol-ref">withdraw()</span> 提取、<span class="code-ref sol-ref">claimReward()</span> 领取奖励、<span class="code-ref sol-ref">getEarned()</span> 计算收益。用 Foundry 写完整测试</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>写配套前端：连接钱包 → 显示质押数据 → Approve + Stake 两步流程 → 实时显示累计奖励 → Withdraw</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">WebSocket / 事件监听</span>：用 Viem 的 <span class="code-ref">watchContractEvent</span> 实时监听 Staked / Withdrawn 事件更新 UI</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>部署到 Vercel + Sepolia，这个项目将是你简历上最有份量的作品——<strong>全栈 DApp，从合约到前端都是自己写的</strong></span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Synthetix Staking 合约源码（学习生产级 Staking 设计）<a href="https://github.com/Synthetixio/synthetix">GitHub/Synthetixio</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Vitalik Buterin 的博客（选 1-2 篇感兴趣的读，提升行业认知）<a href="https://vitalik.eth.limo/">vitalik.eth.limo</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>练习用英文描述你的 Staking 项目——写一段 200 字的项目介绍，为面试做准备</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 12</div>
+          <div class="week-title">The Graph + 综合项目：DeFi Dashboard</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>学习 <span class="highlight">The Graph</span> 协议：写 Subgraph 索引链上事件，用 GraphQL 查询历史数据</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>做一个 <span class="highlight">DeFi 仪表盘</span>，聚合展示用户的质押数据、代币余额、交易历史</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>技术要点：多链支持（Ethereum + Polygon/Arbitrum）、数据可视化（Recharts）、骨架屏</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>移动端适配（Web3 JD 普遍要求），确保钱包连接在手机端也能正常工作</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>The Graph 官方文档 <a href="https://thegraph.com/docs/">thegraph.com/docs</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Alchemy — Multichain DApp Development Guide <a href="https://docs.alchemy.com/">docs.alchemy.com</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Paradigm 研究博客（选读 1 篇，了解行业前沿）<a href="https://www.paradigm.xyz/writing">paradigm.xyz/writing</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 13</div>
+          <div class="week-title">安全意识 + 代码质量 + 开源贡献</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>前端安全：防范 XSS 攻击、钱包签名钓鱼、恶意合约交互。了解 <span class="code-ref">EIP-712</span> 签名验证</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>代码质量：用 ESLint + Prettier 规范代码，写单元测试（Vitest），学会用 TypeScript 严格模式</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>找 1-2 个 <span class="highlight">开源 Web3 项目</span>（如 scaffold-eth-2）提交 PR：修 bug、补文档、加测试都行</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>完善 GitHub profile，给每个项目写好 README（英文），配上截图和演示链接</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Trail of Bits — Building Secure Smart Contracts <a href="https://blog.trailofbits.com/">blog.trailofbits.com</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>Samczsun 安全博客（Web3 顶级安全研究者）<a href="https://samczsun.com/">samczsun.com</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>练习：用英文写一篇你的 Ethernaut 通关笔记，发到 Mirror 或 Medium</span></div>
+        </div>
+      </div>
+      <div class="deliverable">阶段交付：GitHub 上有 5-6 个项目（含 1 个全栈 DApp）+ 开源贡献记录 + Ethernaut 通关截图</div>
+    </div>
+  </div>
+
+  <!-- ============ PHASE 4 ============ -->
+  <div class="phase phase-4">
+    <div class="phase-header">
+      <div class="phase-icon">🎯</div>
+      <div class="phase-meta">
+        <h2>阶段四：求职冲刺</h2>
+        <span class="time-badge">第 14-16 周 · 每天 4-6 小时 · 含面试准备</span>
+      </div>
+    </div>
+
+    <div class="week-card has-solidity has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 14 <span class="updated-tag">UPDATED</span></div>
+          <div class="week-title">简历打磨 + 面试题库（含 Solidity） <span class="sol-tag">Solidity</span></div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span><span class="highlight">重写简历</span>：突出"能写合约的 Web3 前端"定位，强调全栈 DApp 项目经验</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>准备前端高频面试题：React Hooks 原理、Wagmi 工作流、钱包连接流程、交易生命周期</span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>准备 Solidity 面试题：<span class="highlight">什么是重入攻击？如何防范？</span> <span class="highlight">storage 和 memory 的区别？</span> <span class="highlight">ERC-20 的 approve + transferFrom 为什么要分两步？</span> <span class="highlight">delegatecall 和 call 的区别？</span></span></div>
+        <div class="task-item"><div class="task-bullet sol-bullet"></div><span>合约手写题练习：给你一个需求（如简单拍卖、投票合约），现场用 Solidity 写出来。每天练 1-2 道</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>准备英文自我介绍（3 分钟版）和 3 个核心项目的英文描述（每个 2 分钟），反复练到流畅</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读 + 口语练习</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Web3 面试常见英文问答整理 <a href="https://github.com/nicedao/web3-interview-questions">GitHub/web3-interview</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>用英文回答技术题：录音自己的回答，听一遍，改进后再录。重复 3 次</span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>找口语陪练对练面试场景（闲鱼 30-40 元/节，或用 Cambly / italki 平台）</span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>YouTube — TechLead / Clement Mihailescu（看英文技术面试真题视频，熟悉面试节奏）</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 15</div>
+          <div class="week-title">海投 + 社区曝光</div>
+        </div>
+        <span class="hours-tag">~25h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>在 <span class="highlight">web3.career</span>、<span class="highlight">remote3.co</span>、<span class="highlight">cryptocurrencyjobs.co</span>、LinkedIn 大量投递，每天 5-10 个岗位</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>岗位选择策略：优先投"前端 + 会 Solidity 加分"的岗位，其次投纯前端岗位，也可以试投一些要求不高的全栈岗</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>加入 Web3 开发者社区：Discord（Ethereum、Wagmi）、Twitter/X 关注 Web3 项目方，参与讨论</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>写 1-2 篇技术博客：分享 Vue 转 React + Web3 的经验，或者分享 Ethernaut 攻略，发到 Mirror/Medium</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>参加 Web3 Hackathon（如 ETHGlobal），你现在能写合约+前端，可以独立参赛</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文阅读</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>Mirror.xyz 上的英文技术博客（找几篇 Web3 前端经验分享）<a href="https://mirror.xyz/">mirror.xyz</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>ETHGlobal 往期获奖项目介绍（读英文项目描述，学习如何用英文展示项目）<a href="https://ethglobal.com/showcase">ethglobal.com/showcase</a></span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>在 Twitter/X 用英文发 1-2 条技术推文，分享你的学习进展，积累行业存在感</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card has-english">
+      <div class="week-card-header">
+        <div>
+          <div class="week-label">Week 16</div>
+          <div class="week-title">面试实战 + 查漏补缺</div>
+        </div>
+        <span class="hours-tag">~30h</span>
+      </div>
+      <div class="week-content">
+        <div class="task-item"><div class="task-bullet"></div><span>积极面试，把每次面试当作学习机会，记录面试题并查漏补缺</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>常见编码面试：现场实现钱包连接组件、读取合约数据并渲染、处理交易状态的 React 组件</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>系统设计题准备：如何设计一个 DEX 前端架构？如何做多链适配？如何优化 DApp 性能？</span></div>
+        <div class="task-item"><div class="task-bullet"></div><span>持续优化项目，根据面试反馈迭代代码质量和功能</span></div>
+      </div>
+      <div class="eng-section">
+        <div class="eng-section-header">📖 本周英文练习</div>
+        <div class="eng-links">
+          <div class="eng-link-item"><div class="link-dot"></div><span>每次面试后用英文写面试复盘笔记，整理不会回答的问题</span></div>
+          <div class="eng-link-item"><div class="link-dot"></div><span>复习所有项目的英文描述，确保能自然地用英文解释技术决策和架构选择</span></div>
+        </div>
+      </div>
+      <div class="deliverable">阶段目标：收到 1-3 个 offer，以"能写合约的 Web3 前端"身份成功入职</div>
+    </div>
+  </div>
+
+  <!-- ============ ORAL STRATEGY ============ -->
+  <div class="oral-box">
+    <h3>🗣 口语提升策略：分阶段务实训练</h3>
+    <p>Web3 远程面试大概率需要英文口语（尤其海外项目）。但不需要流利——能用简单英文把技术讲清楚就行。面试口语 80% 的内容可以提前准备。</p>
+    <div class="oral-steps">
+      <div class="oral-step">
+        <div class="os-phase">Week 1-8 · 输入期</div>
+        <div class="os-desc">每天读英文文档时，遇到不会的技术词汇记下来。每天用英文自言自语 10 分钟，描述当天学了什么。不用在意语法，重点是敢说出来。</div>
+      </div>
+      <div class="oral-step">
+        <div class="os-phase">Week 9-13 · 输出期</div>
+        <div class="os-desc">开始找口语陪练（闲鱼 30-40 元/节，或 Cambly / italki），每周 2-3 次，专练技术场景对话。同时用英文写项目 README 和技术博客。</div>
+      </div>
+      <div class="oral-step">
+        <div class="os-phase">Week 14-16 · 实战期</div>
+        <div class="os-desc">背熟 3 分钟英文自我介绍 + 3 个项目介绍。录音→听→改→再录，重复 3 遍。模拟面试练习：让朋友或 AI 扮演面试官用英文提问。</div>
+      </div>
+    </div>
+    <p style="margin-top: 14px; font-size: 12.5px; color: var(--text-muted);">💡 保底策略：如果英语实在来不及，优先投华人团队的远程 Web3 岗位（电鸭社区、Job3.co），日常用中文沟通，英语只需读写能力。入职后再边工作边提升口语。</p>
+  </div>
+
+  <!-- ============ RESOURCES ============ -->
+  <div class="resource-section">
+    <h3>📚 核心学习资源</h3>
+    <div class="resource-grid">
+      <div class="resource-item">
+        <div class="r-cat">React</div>
+        <div class="r-name">react.dev 官方文档</div>
+        <div class="r-desc">最好的 React 学习资料，有 Vue 基础 3-5 天可过完</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Next.js</div>
+        <div class="r-name">nextjs.org/learn</div>
+        <div class="r-desc">官方交互式教程，边学边做</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Web3 入门</div>
+        <div class="r-name">ethereum.org/developers</div>
+        <div class="r-desc">以太坊官方开发者入门教程</div>
+      </div>
+      <div class="resource-item sol-resource">
+        <div class="r-cat">Solidity 入门</div>
+        <div class="r-name">CryptoZombies</div>
+        <div class="r-desc">游戏化学 Solidity，轻松有趣，Week4 必做</div>
+      </div>
+      <div class="resource-item sol-resource">
+        <div class="r-cat">Solidity 安全</div>
+        <div class="r-name">Ethernaut (ethernaut.openzeppelin.com)</div>
+        <div class="r-desc">CTF 安全挑战，亲手利用漏洞学安全</div>
+      </div>
+      <div class="resource-item sol-resource">
+        <div class="r-cat">Foundry</div>
+        <div class="r-name">Foundry Book (book.getfoundry.sh)</div>
+        <div class="r-desc">Foundry 官方文档，Week10 核心参考</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Wagmi</div>
+        <div class="r-name">wagmi.sh 官方文档</div>
+        <div class="r-desc">React Hooks for Ethereum，必读</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">Viem</div>
+        <div class="r-name">viem.sh 官方文档</div>
+        <div class="r-desc">TypeScript 以太坊客户端，Wagmi 底层</div>
+      </div>
+      <div class="resource-item sol-resource">
+        <div class="r-cat">合约库</div>
+        <div class="r-name">OpenZeppelin Contracts</div>
+        <div class="r-desc">行业标准合约库，ERC-20/721 参考实现</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">实战脚手架</div>
+        <div class="r-name">scaffold-eth-2</div>
+        <div class="r-desc">最佳 DApp 全栈学习模板，Next.js + Wagmi + Hardhat</div>
+      </div>
+      <div class="resource-item sol-resource">
+        <div class="r-cat">Solidity 进阶</div>
+        <div class="r-name">Solidity by Example</div>
+        <div class="r-desc">按场景学 Solidity，有大量实用代码示例</div>
+      </div>
+      <div class="resource-item">
+        <div class="r-cat">求职平台</div>
+        <div class="r-name">web3.career / remote3.co</div>
+        <div class="r-desc">Web3 专业招聘网站，远程岗位为主</div>
+      </div>
+      <div class="resource-item" style="border-color: rgba(56,189,248,0.15);">
+        <div class="r-cat" style="color: var(--accent-sky);">英文博客</div>
+        <div class="r-name">Josh Comeau / Dan Abramov</div>
+        <div class="r-desc">joshwcomeau.com / overreacted.io，React 经典英文博客</div>
+      </div>
+      <div class="resource-item" style="border-color: rgba(56,189,248,0.15);">
+        <div class="r-cat" style="color: var(--accent-sky);">英文博客</div>
+        <div class="r-name">Vitalik / Paradigm / samczsun</div>
+        <div class="r-desc">Web3 行业顶级英文博客，提升认知和阅读能力</div>
+      </div>
+      <div class="resource-item" style="border-color: rgba(56,189,248,0.15);">
+        <div class="r-cat" style="color: var(--accent-sky);">YouTube 练听力</div>
+        <div class="r-name">Patrick Collins / Nader Dabit / Finematics</div>
+        <div class="r-desc">最优质的 Web3 英文教学频道，语速适中</div>
+      </div>
+      <div class="resource-item" style="border-color: rgba(56,189,248,0.15);">
+        <div class="r-cat" style="color: var(--accent-sky);">口语练习</div>
+        <div class="r-name">Cambly / italki / 闲鱼口语陪练</div>
+        <div class="r-desc">Cambly 约 $10/节，闲鱼 30-40 元/节，性价比高</div>
+      </div>
+      <div class="resource-item" style="border-color: rgba(56,189,248,0.15);">
+        <div class="r-cat" style="color: var(--accent-sky);">华人求职</div>
+        <div class="r-name">电鸭社区 / Job3.co</div>
+        <div class="r-desc">国人 Web3 远程岗位聚集地，英语要求较低的保底选择</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUMMARY ============ -->
+  <div class="summary-callout">
+    <h3>💡 关键策略提醒（v2.1 更新）</h3>
+    <p><strong>你的目标定位是"能写合约、能用英文沟通的 Web3 前端"。</strong>这在市场上非常稀缺——大多数前端只会调合约，大多数 Solidity 开发不关心 UI，而很多中国开发者卡在英语上。你三项都能做，就是降维打击。</p>
+    <p><strong>英语不是额外负担，而是内嵌在学习中的。</strong>每周的英文阅读材料都跟当周技术内容对应，读技术文档的同时就在练英语。不需要额外花大块时间，日积月累就够了。</p>
+    <p><strong>口语准备 80% 靠提前背熟。</strong>英文自我介绍 + 3 个项目描述 + 10 个高频技术问答，背熟练流利就能应付大部分面试。剩下 20% 靠临场发挥，表达不完美没关系，能把意思讲清楚就行。</p>
+    <p><strong>投简历策略要分层：</strong>华人团队远程岗（电鸭/Job3）作为保底，海外项目（web3.career/remote3）作为冲刺目标。先拿到 offer 再说，入职后再提升英语跳板到更好的岗位。</p>
+    <p><strong>全栈 DApp 项目是你的王牌。</strong>Week 11 的 Staking 项目（自己写合约 + 自己写前端）是简历上最有说服力的作品，好好打磨。</p>
+    <div class="tech-stack-summary">
+      <span class="ts-item ts-core">React</span>
+      <span class="ts-item ts-core">Next.js</span>
+      <span class="ts-item ts-core">TypeScript</span>
+      <span class="ts-item ts-core">Tailwind</span>
+      <span class="ts-item ts-web3">Wagmi</span>
+      <span class="ts-item ts-web3">Viem</span>
+      <span class="ts-item ts-web3">RainbowKit</span>
+      <span class="ts-item ts-web3">Ethers.js</span>
+      <span class="ts-item ts-sol">Solidity</span>
+      <span class="ts-item ts-sol">Hardhat</span>
+      <span class="ts-item ts-sol">Foundry</span>
+      <span class="ts-item ts-sol">OpenZeppelin</span>
+      <span class="ts-item ts-tool">The Graph</span>
+      <span class="ts-item ts-tool">IPFS</span>
+      <span class="ts-item ts-eng">English Reading</span>
+      <span class="ts-item ts-eng">English Speaking</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
